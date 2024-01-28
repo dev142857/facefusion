@@ -9,8 +9,9 @@ import warnings
 import shutil
 import numpy
 import onnxruntime
-from time import sleep
+import argparse
 from argparse import ArgumentParser, HelpFormatter
+from time import sleep
 
 import facefusion.choices
 import facefusion.globals
@@ -35,6 +36,7 @@ warnings.filterwarnings('ignore', category = UserWarning, module = 'torchvision'
 def cli() -> None:
 	signal.signal(signal.SIGINT, lambda signal_number, frame: destroy())
 	program = ArgumentParser(formatter_class = lambda prog: HelpFormatter(prog, max_help_position = 120), add_help = False)
+	program.add_argument('--skip-venv', help = argparse.SUPPRESS, action = 'store_true')
 	# general
 	program.add_argument('-s', '--source', help = wording.get('help.source'), action = 'append', dest = 'source_paths', default = config.get_str_list('general.source_paths'))
 	program.add_argument('-t', '--target', help = wording.get('help.target'), dest = 'target_path', default = config.get_str_value('general.target_path'))
